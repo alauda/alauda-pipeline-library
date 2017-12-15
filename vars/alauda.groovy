@@ -87,8 +87,8 @@ def waitUpdateService(serviceFullName, spaceName, timeoutVal=600){
   timeout(time:timeoutVal, unit:"SECONDS"){
     waitUntil(){
       def service = client.getService(serviceFullName, spaceName)
-      if(client.isServiceStartError(service)){
-        return error("${serviceFullName} created error !")
+      if(client.isServiceUpdateError(service)){
+        return error("${serviceFullName} update error !")
       }
       echo "${serviceFullName} is ${service['current_status']}"
       return client.isServiceRunning(service)

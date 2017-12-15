@@ -197,8 +197,8 @@ def isServiceRunning(service){
 def isServiceUpdating(service){
   return service["current_status"].equals("Updating")
 }
-def isServiceStartError(service){
-  return service["current_status"].equals("StartError")
+def isServiceUpdateError(service){
+  return service["current_status"].equals("UpdateError")
 }
 
 def waitDeployApp(appName, spaceName, timeout=300){
