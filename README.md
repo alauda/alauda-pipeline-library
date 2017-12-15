@@ -4,14 +4,14 @@ This git repository contains a library of reusable [Jenkins Pipeline](https://je
 
 ## How to use this library
 - Jenkins configure  
-GO to Jenkins Server `manage/configure/Global Pipeline Libraries` 添加如下 Library
+GO to Jenkins Server `manage/configure/Global Pipeline Libraries` add a Library
 ```
 Name: alauda-pipeline
 Default version: master
 Allow default version to be overridden: [√]
 Include @Library changes in job recent changes: [√]
 Modern SCM: [√]
-Git/Project Repository: https://github.com/chengjingtao/alauda-pipeline.git
+Git/Project Repository: https://github.com/alauda/alauda-pipeline-library.git
 ```
 - Using in jenkins file
 ```
