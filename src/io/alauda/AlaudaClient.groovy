@@ -169,10 +169,10 @@ def createApp(yamlFileName, content, spaceName, appName, region){
  node(){
    writeFile file: "${yamlFileName}", text: content
    echo "begin to deploy..."
-   withEnv(["API_ENDPOINT=${this.endpoint}", "API_TOKEN=${this.token}", "SPACE_NAME=${spaceName}", "APP_NAME=${appName}","REGION=${region}", "SERVICES_FILE=${yamlFileName}"]){
+   withEnv(["NAMESPACE=${this.namespace}", "API_ENDPOINT=${this.endpoint}", "API_TOKEN=${this.token}", "SPACE_NAME=${spaceName}", "APP_NAME=${appName}","REGION=${region}", "SERVICES_FILE=${yamlFileName}"]){
    sh '''
 curl -s -S --request POST \
- --url ${API_ENDPOINT}/v1/applications/alauda/ \
+ --url ${API_ENDPOINT}/v1/applications/${NAMESPACE}/ \
  --header "authorization: Token ${API_TOKEN}" \
  --header 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
  --form region=${REGION} \
