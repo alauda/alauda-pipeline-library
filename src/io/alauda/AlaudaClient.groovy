@@ -9,10 +9,11 @@ import groovy.json.JsonSlurper
 import org.yaml.snakeyaml.Yaml
 import com.cloudbees.groovy.cps.NonCPS
 
-def setup(endpoint, namespace, token){
+def setup(endpoint, namespace, token, verbose=false){
   this.endpoint = endpoint
   this.namespace = namespace
   this.token = token
+  this.verbose = verbose
 }
 
 def info(){
@@ -34,7 +35,8 @@ def sendRequest(method, path, data=null, codes="100:399"){
     requestBody:reqBody, 
     customHeaders: headers,
     validResponseCodes: codes,
-    contentType: "APPLICATION_JSON"
+    contentType: "APPLICATION_JSON",
+    quiet: !this.verbose
   )
   if(response.content == null || response.content == ""){
     return [:]

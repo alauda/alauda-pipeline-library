@@ -9,9 +9,9 @@ import org.yaml.snakeyaml.Yaml
 
 AlaudaClient client
 
-def setup(endpoint, namespace, token){
+def setup(endpoint, namespace, token, verbose=false){
   client = new AlaudaClient()
-  client.setup(endpoint, namespace, token)
+  client.setup(endpoint, namespace, token, verbose)
 }
 
 def services(region, spaceName){
@@ -75,7 +75,7 @@ def waitDeployApp(appName, spaceName, timeoutVal=600){
     waitUntil(){
       def app = client.getApp(appName, spaceName)
       if(client.isAppCreateError(app)){
-        return error("${appName} deploy error ! please check it on ${client.endpoint}")
+        return error("${appName} deploy error !")
       }
       echo "${appName} is ${app['current_status']}"
       return client.isAppRunning(app)
@@ -88,7 +88,7 @@ def waitUpdateService(serviceFullName, spaceName, timeoutVal=600){
     waitUntil(){
       def service = client.getService(serviceFullName, spaceName)
       if(client.isServiceStartError(service)){
-        return error("${serviceFullName} created error ! please check it on ${client.endpoint}")
+        return error("${serviceFullName} created error !")
       }
       echo "${serviceFullName} is ${service['current_status']}"
       return client.isServiceRunning(service)
