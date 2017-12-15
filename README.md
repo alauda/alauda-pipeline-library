@@ -4,7 +4,7 @@ This git repository contains a library of reusable [Jenkins Pipeline](https://je
 
 ## How to use this library
 
-进入 到 Jenkins `系统管理`
+进入 到 Jenkins `系统管理/系统设置`
 
 ### Functions from the Jenkins global library
 #### alauda.setup

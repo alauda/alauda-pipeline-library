@@ -70,19 +70,27 @@ def deployApp(region, spaceName, appName, tags, ymlFile="alauda.app.yml"){
   client.createApp(updatedYmlFileName, content, spaceName, appName, region)
 }
 
-def waitDeployApp(appName, spaceName, timeoutVal=300){
-  timeout(timeoutVal){
+def waitDeployApp(appName, spaceName, timeoutVal=600){
+  timeout(time:timeoutVal, unit:"SECONDS"){
     waitUntil(){
       def app = client.getApp(appName, spaceName)
+      if(client.isAppCreateError(app)){
+        return error("${appName} deploy error ! please check it on ${client.endpoint}")
+      }
+      echo "${appName} is ${app['current_status']}"
       return client.isAppRunning(app)
     }
   }
 }
 
-def waitUpdateService(serviceFullName, spaceName, timeoutVal=300){
-  timeout(timeoutVal){
+def waitUpdateService(serviceFullName, spaceName, timeoutVal=600){
+  timeout(time:timeoutVal, unit:"SECONDS"){
     waitUntil(){
       def service = client.getService(serviceFullName, spaceName)
+      if(client.isServiceStartError(service)){
+        return error("${serviceFullName} created error ! please check it on ${client.endpoint}")
+      }
+      echo "${serviceFullName} is ${service['current_status']}"
       return client.isServiceRunning(service)
     }
   }

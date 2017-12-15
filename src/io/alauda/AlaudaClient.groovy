@@ -75,7 +75,7 @@ def getAppDeployYamlByTempl(uuid, imgTagMap){
 }
 
 def getApp(appName, spaceName){
-  path = "applications/${namespace}/${appName}/?space_name=${spaceName}"
+  path = "applications/${namespace}/${appName}/?space_name=${spaceName}&meta=true"
   return httpGet(path)
 }
 
@@ -96,11 +96,15 @@ def deleteApp(appName, spaceName){
 }
 
 def isAppRunning(app){
-  return app['current_status'] == "Running"
+  return app['current_status'].equals("Running")
 }
 
-def isAppStarting(app){
-  return app['current_status'] == "Starting"
+def isAppCreating(app){
+  return app['current_status'].equals("Creating")
+}
+
+def isAppCreateError(app){
+  return app['current_status'].equals('CreateError')
 }
 
 // ----- service
@@ -185,14 +189,14 @@ curl -s -S --request POST \
 }
 
 def isServiceRunning(service){
-  return service["current_status"] == "Running"
+  return service["current_status"].equals("Running")
 }
 
 def isServiceUpdating(service){
-  return service["current_status"] == "Updating"
+  return service["current_status"].equals("Updating")
 }
 def isServiceStartError(service){
-  return service["current_status"] == "StartError"
+  return service["current_status"].equals("StartError")
 }
 
 def waitDeployApp(appName, spaceName, timeout=300){
@@ -208,7 +212,7 @@ def waitDeployApp(appName, spaceName, timeout=300){
     def app = getApp(appName, spaceName)
     echo "httpGet ok.."
     echo "---> ${app}"
-    if(isAppStarting(app)){
+    if(isAppCreating(app)){
       echo "will sleep 2...."
       sleep 2
       echo "sleep 2 ok, will continue"
