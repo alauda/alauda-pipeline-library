@@ -26,7 +26,7 @@ def startService(name, spaceName){
  client.startService(name, spaceName)
 }
 
-def updateService(serviceFullName, spaceName, imgTag, envVars){
+def updateService(serviceFullName, spaceName, imgTag, envVars=[:]){
  client.updateService(serviceFullName, spaceName, imgTag, envVars)
 }
 
@@ -64,7 +64,7 @@ def _getAppYmlContent(ymlFile, tags){
   return content
 }
 
-def deployApp(region, spaceName, appName, tags, ymlFile="alauda.app.yml"){
+def deployApp(region, spaceName, appName, tags=[:], ymlFile="alauda.app.yml"){
   def content = _getAppYmlContent(ymlFile, tags)
   def updatedYmlFileName = "updated-by-alauda---${ymlFile}"
   client.createApp(updatedYmlFileName, content, spaceName, appName, region)
