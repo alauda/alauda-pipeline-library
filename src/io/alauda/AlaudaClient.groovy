@@ -201,6 +201,7 @@ def isServiceUpdateError(service){
   return service["current_status"].equals("UpdateError")
 }
 
+// not ready
 def waitDeployApp(appName, spaceName, timeout=300){
   echo "will wait"
   def max = timeout/2

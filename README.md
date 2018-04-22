@@ -6,7 +6,7 @@ This git repository contains a library of reusable [Jenkins Pipeline](https://je
 - Jenkins configure  
 GO to Jenkins Server `manage/configure/Global Pipeline Libraries` add a Library
 ```
-Name: alauda-pipeline
+Name: alaudaee-pipeline
 Default version: master
 Allow default version to be overridden: [√]
 Include @Library changes in job recent changes: [√]
@@ -15,7 +15,7 @@ Git/Project Repository: https://github.com/alauda/alauda-pipeline-library.git
 ```
 - Using in jenkins file
 ```
-@Library("alauda-pipeline") _
+@Library("alaudaee-pipeline") _
 pipeline{
     agent any
     environment{
@@ -33,12 +33,12 @@ pipeline{
             steps{
                 script{
                     // config alauda
-                    alauda.setup("${ENDPOINT}", "${NAMESPACE}", "${TOKEN}")
+                    alaudaEE.setup("${ENDPOINT}", "${NAMESPACE}", "${TOKEN}")
                     // deploy ${APP_NAME} on ${REGION}
-                    alauda.deployApp("${REGION}", "${SPACE_NAME}", "${APP_NAME}")
+                    alaudaEE.deployApp("${REGION}", "${SPACE_NAME}", "${APP_NAME}")
                     // wait ${APP_NAME} until it deploy successfull or failure
                     // if it fails ,will abort current build
-                    alauda.waitDeployApp("${APP_NAME}","${SPACE_NAME}")
+                    alaudaEE.waitDeployApp("${APP_NAME}","${SPACE_NAME}")
                 }
             }
         }
@@ -47,7 +47,7 @@ pipeline{
 ```
 
 ### Functions from the Jenkins global library
-#### alauda.setup
+#### alaudaEE.setup
 config alauda information
 - params:
   - endpoint: alauda api endpoint
@@ -57,37 +57,37 @@ config alauda information
 
 ```
 script{
-  alauda.setup(
+  alaudaEE.setup(
     "http://api.alauda.cn",
     "alauda",
     "the token"
   )
 }
 ```
-#### alauda.services
+#### alaudaEE.services
 list all services
 - params:
   - region: region name
   - spaceName: space name
 ```
 script{
-  def services = alauda.services("k8s","global")
+  def services = alaudaEE.services("k8s","global")
   echo "${services}"
 }
 ```
 
-#### alauda.stopService
+#### alaudaEE.stopService
 stop service on alauda
 - params:
   - name: service name
   - spaceName: space name
 ```
 script{
-  alauda.stopService(name, spaceName)
+  alaudaEE.stopService(name, spaceName)
 }
 ```
 
-#### alauda.startService
+#### alaudaEE.startService
 start service on alauda
 start service on alauda
 - params:
@@ -95,23 +95,23 @@ start service on alauda
   - spaceName: space name
 ```
 script{
-  alauda.startService(name, spaceName)
+  alaudaEE.startService(name, spaceName)
 }
 ```
 
 
-#### alauda.deleteService
+#### alaudaEE.deleteService
 delete service on alauda
 - params:
   - name: service name
   - spaceName: space name
 ```
 script{
-  alauda.deleteService(name, spaceName)
+  alaudaEE.deleteService(name, spaceName)
 }
 ```
 
-#### alauda.updateService
+#### alaudaEE.updateService
 update service on alauda
 - params:
   - serviceFullName: aplicationName/serviceName , eg: global-component/jakiro
@@ -120,14 +120,14 @@ update service on alauda
   - envVars: `map`,`optional`, environment variables, eg: [ name1 :"value1", name2:"value2"]
 ```
 script{
-  alauda.updateService(
+  alaudaEE.updateService(
     "app-create-by-jenkins/seq1", "global", "v2", 
     [name1:"jenkins1", name2:"jenkins2"]
   )
 }
 ```
 
-### alauda.waitUpdateService
+### alaudaEE.waitUpdateService
 wait until deploy service successfull or failure.
 - params: 
   - serviceFullName: applicationName/serviceName eg: app-created-by-jenkins/service1
@@ -135,11 +135,11 @@ wait until deploy service successfull or failure.
   - timeoutVal: `int`,`optional`, default is 600. unit will be seconds.
 ```
 script{
-   alauda.waitUpdateService("app-created-by-jenkins","global")
+   alaudaEE.waitUpdateService("app-created-by-jenkins","global")
 }
 ```
 
-#### alauda.deployApp
+#### alaudaEE.deployApp
 create a new application on alauda according your alauda.app.yml.  
 you should add `alauda.app.yml` to your repository.  
 - params:
@@ -151,12 +151,12 @@ you should add `alauda.app.yml` to your repository.
 
 ```
 script{
-  alauda.deployApp("int", "global", "app-created-by-jenkins", [service1:"${params['IMG_TAG']}"])
+  alaudaEE.deployApp("int", "global", "app-created-by-jenkins", [service1:"${params['IMG_TAG']}"])
 }
 
 ```
 
-### alauda.waitDeployApp
+### alaudaEE.waitDeployApp
 wait until deploy application successfull or failure.
 - params: 
   - appName: application name
@@ -164,18 +164,18 @@ wait until deploy application successfull or failure.
   - timeoutVal: `int`,`optional`, default is 600. unit will be seconds.
 ```
 script{
-   alauda.waitDeployApp("app-created-by-jenkins","global")
+   alaudaEE.waitDeployApp("app-created-by-jenkins","global")
 }
 ```
 
-### alauda.deleteApp
+### alaudaEE.deleteApp
 delete application on alauda
 - params:
   - appName: application name
   - spaceName: space name
 ```
 script{
-  alauda.deleteApp(name, spaceName)
+  alaudaEE.deleteApp(name, spaceName)
 }
 
 
