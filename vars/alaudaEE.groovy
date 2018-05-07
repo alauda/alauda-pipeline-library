@@ -18,6 +18,10 @@ def services(region, spaceName){
   return client.services(region, spaceName)
 }
 
+def retrieveService(name, spaceName){
+  return client.getService(name, spaceName)
+}
+
 def stopService(name, spaceName){
  client.stopService(name, spaceName)
 }
@@ -96,10 +100,6 @@ def waitUpdateService(serviceFullName, spaceName, timeoutVal=600){
   }
 }
 
-def waitDeployApp2(appName, spaceName, timeout=300){
-  client.waitDeployApp(appName, spaceName, timeout)
-}
-
 def waitUpdateService2(serviceFullName, spaceName, timeout=300){
   def max = timeout/2
 
@@ -132,4 +132,8 @@ def waitUpdateService2(serviceFullName, spaceName, timeout=300){
 
 def deleteApp(appName, spaceName){
   client.deleteApp(appName, spaceName)
+}
+
+def retrieveApp(appName, spaceName){
+  client.getApp(appName, spaceName)
 }
